@@ -61,14 +61,15 @@
 					oldmap.setMap(map);
 					var limites = rectangulo.getBounds().contains(pos);
 						if(limites){
-							
+							map.setCenter(pos);
 						}else{
+							map.setCenter(new google.maps.LatLng(19.544008117733167, -96.91026091575623));		
 							alert("su posición no se encuentra en una sección identificada, será redirigido al àrea correspondiente");
-							map.setCenter(new google.maps.LatLng(19.544008117733167, -96.91026091575623));			
+								
 						}											
 												
 					
-					map.setCenter(pos);
+					
 				}, function() {
 				  handleNoGeolocation(true);
 				});
