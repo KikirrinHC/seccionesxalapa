@@ -63,8 +63,8 @@
 						if(limites){
 							
 						}else{
-							alert("su posición no se encuentra en una sección identificada");
-										
+							alert("su posición no se encuentra en una sección identificada, será redirigido al àrea correspondiente");
+							map.setCenter(new google.maps.LatLng(19.544008117733167, -96.91026091575623));			
 						}											
 												
 					
@@ -84,6 +84,7 @@
 			var pos2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			marker.setPosition(pos2);
 			marker.setMap(map);
+			map.setCenter(pos2);
 		}, function() {
 			handleNoGeolocation(true);
 		});
