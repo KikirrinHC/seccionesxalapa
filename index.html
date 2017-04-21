@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Distritos Electorales Xalapa</title> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8" http-equiv="X-UA-Compatible"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <link rel="apple-touch-icon" href="images/"/>
+        <link rel="shortcut icon" href="images/">
+        <link rel="icon" href="images/" />
+        <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhOqIBo5qj3sxia_z9hDYSmZNVGC2zht0&libraries=drawing,geometry"
+  type="text/javascript"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+  <body onload="initialize();">
+            <div class="" id="map_canvas"></div>
+             <button id="update" onclick="update()">Actualizar</button>          
+    <script>
+
+        var map;
+        var marker;
+		var imageBounds;
+
+
+        $(window).resize(function() {
+            $("#map_canvas").css("height", $(window).height() - 45);
+        });
+
+
+		function initialize() {
+		 $("#map_canvas").css("height", $(window).height() - 45);
+		
+					var mapOptions = {
+						zoom: 15
+					};
+					map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+			  
+					marker = new google.maps.Marker({
+					});
+					var imageBounds = new google.maps.LatLngBounds(
+					//	new google.maps.LatLng(19.15324593718747, -99.74139422178268),
+						//new google.maps.LatLng(19.29051703073281, -99.60967898368835)
+						
+						new google.maps.LatLng(19.48015659360724, -96.97180956602097),
+						new google.maps.LatLng(19.60021376909563, -96.79769396781921)
+					);
+
+		  // Try HTML5 geolocation
+			if(navigator.geolocation) {
+			
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					
+					//var pos = new google.maps.LatLng(19.280359863820017, -99.65629577636719);
+					marker.setPosition(pos);
+					marker.setMap(map);
+					var rectangulo = new google.maps.Rectangle();
+					rectangulo.setBounds(imageBounds);
+					var oldmap = new google.maps.GroundOverlay("images/xalapafull.png", imageBounds);
+					oldmap.setMap(map);
+					var limites = rectangulo.getBounds().contains(pos);
+						if(limites){
+							
+						}else{
+							alert("su posición no se encuentra en una sección identificada");
+										
+						}											
+												
+					
+					map.setCenter(pos);
+				}, function() {
+				  handleNoGeolocation(true);
+				});
+			 } else {
+				// Browser doesn't support Geolocation
+				handleNoGeolocation(false);
+			 }
+		}
+	function update(){
+		//alert();
+		marker.setMap(null);
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var pos2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			marker.setPosition(pos2);
+			marker.setMap(map);
+		}, function() {
+			handleNoGeolocation(true);
+		});
+	}
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+		alert("geo failed");
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+		alert("geo unsupported");
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(19.544008117733167, -96.91026091575623),
+    content: content
+  };
+
+  map.setCenter(options.position);
+}
+		
+
+
+    </script>
+   
+</body>
+</html>
+
+
